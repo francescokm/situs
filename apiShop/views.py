@@ -9,12 +9,12 @@ from .serializers import KategoriSerial
 
 
 class KategoriAPIView(ListAPIView):
+    permission_classes = (AllowAny,)
     queryset = M_Kategori.objects.all()
     serializer_class = KategoriSerial
-    verbose_name = "List Kategori"
 
 class CreateKategoriAPIView(CreateAPIView):
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
     queryset = M_Kategori.objects.all()
     serializer_class = KategoriSerial
 

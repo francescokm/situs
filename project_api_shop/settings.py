@@ -154,11 +154,10 @@ cloudinary.config(
 )
 
 SWAGGER_SETTINGS = {
-    'SECURITY_DEFINITIONS': {
-        'basic': {
-            'type': 'basic'
-        }
-    },
+    'SECURITY_DEFINITIONS': None,
+    'USE_SESSION_AUTH' : True,
+    'LOGIN_URL' : 'rest_framework:login',
+    'LOGOUT_URL' : 'rest_framework:logout',
  
 }
 

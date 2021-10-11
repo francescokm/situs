@@ -18,6 +18,10 @@ from django.urls import include, re_path, path
 from rest_framework_swagger.views import get_swagger_view
 from django.conf.urls import url
 
+admin.site.site_header = 'Situs Shop Admin'                    # default: "Django Administration"
+admin.site.index_title = 'Fitur Admin Situs Shop'                 # default: "Site administration"
+admin.site.site_title = 'Halaman Situs Shop Admin' # default: "Django site admin"
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('docs/', get_swagger_view(title='Situs Shop API')), 
