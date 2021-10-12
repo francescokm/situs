@@ -1,9 +1,10 @@
 from django.urls import path
-from apiShop.views import KategoriAPIView,CreateKategoriAPIView,UpdateKategoriAPIView,DeleteKategoriAPIView
+from apiShop.views import KategoriAPIView,KategoriDetail
+from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
-    path("list_kategori",KategoriAPIView.as_view(),name="kategori_list"),
-    path("create_kategori/", CreateKategoriAPIView.as_view(),name="create_kategori"),
-    path("update_kategori/<int:pk>/",UpdateKategoriAPIView.as_view(),name="update_kategori"),
-    path("delete_kategori/<int:pk>/",DeleteKategoriAPIView.as_view(),name="delete_kategori")
+    path("kategori",KategoriAPIView.as_view(),name="kategori_list"),
+    path("kategori/<int:pk>/",KategoriDetail.as_view(),name="detail_kategori"),
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)

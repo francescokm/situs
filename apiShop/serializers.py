@@ -5,5 +5,5 @@ class KategoriSerial(serializers.ModelSerializer):
 
     class Meta :
         model = M_Kategori
-        fields = ['id','nama','gambar1','gambar2','gambar3']
+        fields = ['id','nama','gambar1','gambar2','gambar3', 'deskripsi']
         read_only_fields = ('id',)

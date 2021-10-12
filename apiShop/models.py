@@ -6,7 +6,9 @@ class Kategori(models.Model):
     gambar1 =  CloudinaryField('gambar1')
     gambar2 =  CloudinaryField('gambar2', null=True, blank=True)
     gambar3 =  CloudinaryField('gambar3', null=True, blank=True)
-        
+    deskripsi = models.TextField(null=True, blank=True)
+    created = models.DateField(auto_now_add=True)
+    modified = models.DateField(auto_now_add=True)
     
     def __str__(self):
         return str('%s' % (self.nama))
