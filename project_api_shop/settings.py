@@ -45,17 +45,20 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
     'rest_framework',
     'cloudinary',
+    'corsheaders',
     
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',    
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'apiShop.middleware.corsMiddleware'
 ]
 
 ROOT_URLCONF = 'project_api_shop.urls'
@@ -162,3 +165,14 @@ SWAGGER_SETTINGS = {
 }
 
 REST_FRAMEWORK = { 'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema' }
+
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    'http://127.0.0.1',
+    'http://localhost',
+]
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    'http://127.0.0.1',
+    'http://localhost',
+]

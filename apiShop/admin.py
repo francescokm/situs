@@ -18,3 +18,4 @@ admin.site.register(Kategori, KategoriAdmin)
 admin.site.register(Produk, ProdukAdmin)
 admin.site.register(Harga, HargaAdmin)
 
+

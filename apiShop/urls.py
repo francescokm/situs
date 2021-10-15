@@ -1,5 +1,7 @@
 from django.urls import path
 from apiShop.views import KategoriAPIView,KategoriDetail,ProdukAPIView,ProdukDetail
+from apiShop.views import KeranjangDetail, ProvinsiAPIView, KabupatenDetail, KecamatanDetail
+from apiShop.views import KeranjangAPIView
 from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
@@ -7,6 +9,12 @@ urlpatterns = [
     path("kategori/<int:pk>/",KategoriDetail.as_view(),name="detail_kategori"),
     path("produk",ProdukAPIView.as_view(),name="produk_list"),
     path("produk/<int:pk>/",ProdukDetail.as_view(),name="detail_produk"),
+    path("provinsi",ProvinsiAPIView.as_view(),name="provinsi_list"),
+    path("kabupaten/<int:pk>/",KabupatenDetail.as_view(),name="detail_kab"),
+    path("kecamatan/<int:pk>/",KecamatanDetail.as_view(),name="detail_kec"),
+    path("keranjang",KeranjangAPIView.as_view(),name="list_keranjang"),
+    path("keranjang/<int:pk>/",KeranjangDetail.as_view(),name="detail_keranjang"),
+
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns, allowed=['json', 'html', 'api'])
