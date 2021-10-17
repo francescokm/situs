@@ -3,18 +3,24 @@ from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, generics
-from .models import Kategori as M_Kategori, Kecamatan, Keranjang, Produk as M_Produk
+from .models import Kategori as M_Kategori, Produk as M_Produk
 from .models import Keranjang as M_Keranjang
 from .models import Provinsi as M_Provinsi
 from .models import Kabupaten as M_Kab
 from .models import Kecamatan as M_Kec
-from .serializers import KategoriSerial, ProdukSerial, KeranjangSerial
-from .serializers import ProvinsiSerial, KabupatenSerial, KecamatanSerial
+from .models import CustomUser as M_User
+from .models import Harga as M_Harga
+
+from .serializers import KategoriSerial, ProdukSerial, KeranjangSerial, CustomUserSerializer
+from .serializers import ProvinsiSerial, KabupatenSerial, KecamatanSerial, HargaSerial
 from rest_framework.permissions import BasePermission, AllowAny,IsAuthenticated, SAFE_METHODS
 from rest_framework.decorators import permission_classes
-from django.contrib.auth.models import User as M_User
 
 
+class RegisterUser(generics.CreateAPIView):
+  serializer_class = CustomUserSerializer
+  query_set = M_User.objects.all()
+  
 
 class ReadOnly(BasePermission):
     def has_permission(self, request, view):
@@ -180,3 +186,33 @@ class KeranjangDetail(APIView):
         dataProduk = self.get_object(pk)
         dataProduk.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
+    def post(self, request, format=None):
+        serialized = UserSerializer(data=request.DATA)
+        if serialized.is_valid():
+            M_User.objects.create_user(
+                serialized.init_data['email'],
+                serialized.init_data['username'],
+                serialized.init_data['password'],
+                serialized.init_data['first_nama'],
+                serialized.init_data['last_nama']
+            )
+            return Response(serialized.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)
+        
+class HargaDetail(generics.ListAPIView):
+    permission_classes = [AllowAny]
+    
+    model = M_Harga
+    serializer_class = HargaSerial
+    
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        try:
+            return M_Harga.objects.filter(produk=pk)
+        except M_Harga.DoesNotExist:
+            raise Http404
+

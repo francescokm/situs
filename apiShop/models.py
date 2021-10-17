@@ -1,8 +1,16 @@
 from django.db import models
-from django.contrib.auth.models import User as M_User
+
 from django.db.models.base import Model
 from cloudinary.models import CloudinaryField
+from django.contrib.auth.models import AbstractUser
 
+
+class CustomUser(AbstractUser):
+    hp = models.CharField(max_length=20)
+    is_customer = models.BooleanField(default=False)   
+
+    class Meta:
+        verbose_name_plural = "API User"
 
 class Provinsi(models.Model):
     nama = models.CharField(max_length=175)
@@ -37,7 +45,7 @@ class Kecamatan(models.Model):
 
 
 class Alamat(models.Model):
-    user = models.OneToOneField(M_User, on_delete=models.CASCADE)
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     jalan = models.TextField()
     jalan_tambahan = models.TextField(null=True, blank=True) 
     kecamatan = models.OneToOneField(Kecamatan, on_delete=models.CASCADE)
@@ -55,7 +63,7 @@ class Alamat(models.Model):
 
 
 class AlamatTambahan(models.Model):
-    user = models.ForeignKey(M_User, related_name='alamatTambahan', on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, related_name='alamatTambahan', on_delete=models.CASCADE)
     jalan = models.TextField()
     jalan_tambahan = models.TextField(null=True, blank=True) 
     kecamatan = models.OneToOneField(Kecamatan, on_delete=models.CASCADE)
@@ -127,7 +135,7 @@ class Harga(models.Model):
 
 
 class Keranjang(models.Model):
-    user = models.ForeignKey(M_User, related_name='keranjang', on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, related_name='keranjang', on_delete=models.CASCADE)
     produk = models.ForeignKey(Produk, related_name='keranjang', on_delete=models.CASCADE)
     qty = models.IntegerField()     
     created = models.DateField(auto_now_add=True)
@@ -135,4 +143,6 @@ class Keranjang(models.Model):
     
 
     class Meta:
-        verbose_name_plural = "API Kerangjang Client"
+        verbose_name_plural = "API Keranjang Customer"
+
+
