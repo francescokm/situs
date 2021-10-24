@@ -19,4 +19,6 @@ urlpatterns = [
     path("user",RegisterUser.as_view(),name="create_keranjang"),
 ]
 
+#ini adalah tambahan untuk branch saja
+
 urlpatterns = format_suffix_patterns(urlpatterns, allowed=['json', 'html', 'api'])
