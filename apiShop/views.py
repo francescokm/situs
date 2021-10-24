@@ -99,6 +99,12 @@ class ProdukDetail(APIView):
         serializer = ProdukSerial(dataProduk)
         return Response(serializer.data)
 
+    def get_queryset(self):
+        kategori = self.request.query_params.get('kategori')        
+        try:
+            return M_Produk.objects.filter(kategori=kategori)
+        except M_Produk.DoesNotExist:
+            raise Http404
     # def put(self, request, pk, format=None):
     #     dataProduk = self.get_object(pk)
     #     serializer = ProdukSerial(dataProduk, data=request.data)
@@ -160,6 +166,19 @@ class KeranjangAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class KeranjangUserDetail(generics.ListAPIView):
+    permission_classes = [AllowAny]
+    
+    model = M_Keranjang
+    serializer_class = KeranjangSerial
+    
+    def get_queryset(self):
+        user = self.kwargs['user']
+        try:
+            return M_Keranjang.objects.filter(user=user)
+        except M_Keranjang.DoesNotExist:
+            raise Http404
+
 class KeranjangDetail(APIView):
     permission_classes = [IsAuthenticated|ReadOnly]
 
@@ -174,6 +193,7 @@ class KeranjangDetail(APIView):
         serializer = KeranjangSerial(dataKeranjang)
         return Response(serializer.data)
 
+    
     def put(self, request, pk, format=None):
         dataProduk = self.get_object(pk)
         serializer = ProdukSerial(dataProduk, data=request.data)
@@ -189,20 +209,6 @@ class KeranjangDetail(APIView):
 
 
 
-    def post(self, request, format=None):
-        serialized = UserSerializer(data=request.DATA)
-        if serialized.is_valid():
-            M_User.objects.create_user(
-                serialized.init_data['email'],
-                serialized.init_data['username'],
-                serialized.init_data['password'],
-                serialized.init_data['first_nama'],
-                serialized.init_data['last_nama']
-            )
-            return Response(serialized.data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)
-        
 class HargaDetail(generics.ListAPIView):
     permission_classes = [AllowAny]
     

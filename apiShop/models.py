@@ -126,6 +126,7 @@ class Harga(models.Model):
     discount = models.DecimalField(max_digits=5, decimal_places=2)
     tanggalAktif = models.DateField()
     jamAktif = models.TimeField()
+    aktif = models.BooleanField(default=True)
     created = models.DateField(auto_now_add=True)
     modified = models.DateField(auto_now_add=True)
     
