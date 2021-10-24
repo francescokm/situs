@@ -20,7 +20,7 @@ urlpatterns = [
 ]
 
 #ini adalah tambahan untuk branch saja
-# ok ini ke dua
+#hore pedelpop tiba
 # ok ini ke tiga
 
 urlpatterns = format_suffix_patterns(urlpatterns, allowed=['json', 'html', 'api'])
